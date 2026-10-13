@@ -35,4 +35,4 @@ Copy `.claude/statusline.py` to `~/.claude/statusline.py` and add to `~/.claude/
 
 It reads the most recently edited chart note, for example `Ward round: 3/4 Treat (plan approved) | chart: 2026-10-11-new-feature | Opus`. Outside a ward-round project it shows the folder and model. The status line shows in the Claude Code terminal (CLI).
 
-Extracted from [Pediatric Tools](https://hyponatremia-peds.github.io/peds-tools/), where the workflow started.
+Extracted from [Pediatric Tools](https://christianrada-do.github.io/peds-tools/), where the workflow started.
