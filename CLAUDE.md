@@ -32,13 +32,7 @@ Treat each change as a patient moving through four stages. Each stage is a skill
 
 ## Delegation (under `/ward-round`)
 
-- The main session is the **Chief**: it plans, splits, delegates, sizes review and consolidates. It works from the chart note and agents' short reports, not full files or diffs.
-- The Fellow's plan includes a **Work split**: units, files, who does each (agent or Chief), order (parallel or after another unit) and risk (high or low).
-- Delegate only substantial, self-contained units. Do small or tightly linked steps directly; explaining them would cost more than doing them.
-- Parallel units must touch different files. Dependent units run in order, each given the previous unit's report.
-- Review is sized to risk: every case gets `/discharge-review`. When two or more high-risk units (sourced fact, threshold, calculation, access/security) sit in different areas, each also gets its own fresh reviewer. Low-risk units get no extra reviewer.
-- Repeat review and fix only for blocking findings, and at most twice (rule 6 after that).
-- Agents don't ask the owner; they return questions to the Chief. Only one agent writes the chart note at a time, so parallel Residents return their rows and the Chief writes them in.
+The main session is the **Chief**: it plans, splits the work into units, delegates the substantial ones to sub-agents, sizes review to risk and consolidates (details in the ward-round skill). Sub-agents never ask the owner and never write the chart note, `Status:` or shared files while other agents are working; they return to the Chief. Review and fix repeats only for blocking findings, at most twice (rule 6 after that).
 
 ## Chart notes
 

@@ -2,6 +2,7 @@
 name: discharge-review
 description: Stage 4 of the ward round. The Review Attending reviews the code diff and the Discharge Nurse audits it against the plan, sources and HANDOFF checks before commit. Use after /treat.
 context: fork
+background: false
 ---
 
 You review the work with fresh eyes in two roles. You did not write this code.
@@ -11,7 +12,7 @@ You review the work with fresh eyes in two roles. You did not write this code.
 1. Open the newest chart note in `.claude/chart/`. Its `Status:` must be `treated`.
 2. Read `git diff` in full. Look for: wrong math, unit mix-ups, off-by-one at boundaries, missing limits, null/undefined/NaN paths, broken access or security logic, errors in the console or logs.
 3. Check that every changed sourced value matches its source as cited in the chart note and the code comment.
-4. If `/ward-round` passed in findings from per-unit Review Attendings, verify each one and include the real ones; don't re-review those units from scratch.
+4. If the chart note has a `## Per-unit review` section, verify each finding there and carry the real ones into yours. Still read the full diff.
 
 ## As the Discharge Nurse (audit)
 
@@ -22,12 +23,12 @@ You review the work with fresh eyes in two roles. You did not write this code.
 
 ## Then
 
-Append your section and set `Status:` to `discharged` or `readmit`.
+Mark each code finding **blocking** (wrong result, unsafe, broken check, outside the plan) or **minor**. Readmit only if there is a blocking finding or a failed audit item; minor findings go under "Found during treatment". Append your section and set `Status:` to `discharged` or `readmit`.
 
 ```markdown
 ## Discharge review (Attending + Nurse, YYYY-MM-DD)
 **Decision:** Discharge | Readmit
-**Code findings:** <numbered, file:line, or "none">
+**Code findings:** <numbered, file:line, blocking / minor, or "none">
 **Audit:** <plan steps ✓/✗, safety net ✓/✗, re-run checks with results>
 ```
 

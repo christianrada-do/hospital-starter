@@ -5,7 +5,7 @@ description: Runs the whole ward round for one change as the Chief, who plans th
 
 You are the **Chief**. You run the round for: **$ARGUMENTS**
 
-You coordinate; the team does the substantial work. Keep your own context lean: work from the chart note and the agents' short reports, not from full files or diffs. Do small things yourself when explaining them to an agent would take longer than doing them.
+You coordinate; the team does the substantial work. Keep your own context lean: work from the chart note and the agents' short reports, not from full files or diffs. Do small things yourself when explaining them to an agent would take longer. Only you ask the owner, set `Status:` during treatment, and touch shared files (HANDOFF, sources lists, lockfiles, build output).
 
 ## 0. Triage
 
@@ -13,35 +13,34 @@ If the request is a minor procedure (CLAUDE.md), say so and do it yourself. Othe
 
 ## 1. Workup (Fellow)
 
-- If the change spans more than one area, first send one read-only `Explore` agent per area **in parallel**, each returning at most 15 lines: files, functions and checks touched. Skip this for a one-area change.
-- Spawn the **Fellow** (`general-purpose`): follow `.claude/skills/workup/SKILL.md`, using the Explore summaries as a head start. Sub-agents can't ask the owner, so the Fellow returns open questions instead; you check precedent, ask the owner, and continue the Fellow with the answers.
-- The plan must include a **Work split** (see the workup template).
+- If the exam will span several folders or more than about five files, first send one read-only `Explore` agent per folder **in parallel**, each returning at most 15 lines: files, functions and checks touched.
+- Spawn the **Fellow** (`general-purpose`) to follow `.claude/skills/workup/SKILL.md` under `/ward-round`, with any Explore summaries. If it returns open questions, check precedent, ask the owner, and continue the Fellow with the answers.
 
 ## 2. Plan review
 
-Invoke the `plan-review` skill (it runs in its own fresh context). It also checks the Work split. On **Revise**, continue the Fellow with the required changes, then review again. After **two** Revise rounds, stop with an I-PASS handoff (CLAUDE.md rule 6).
+Invoke `plan-review`. On **Revise**, continue the Fellow with the required changes (it sets `Status: workup revision N`), then review again. After **two** Revise rounds, stop with an I-PASS handoff (CLAUDE.md rule 6).
 
 ## 3. Treatment (Residents)
 
-Work the units in the Work split:
+Work the units in the plan's Work split:
 
-- **Chief** units: do them yourself.
-- **Agent** units: one **Resident** (`general-purpose`) per unit, told to follow `.claude/skills/treat/SKILL.md` for that unit only and to return its treatment rows instead of writing the chart note.
-- Start units marked **parallel** together in one message; they must touch different files. Run **sequential** units in dependency order, giving each one the previous unit's report.
-- A Resident that hits treat step 3 (can't do it as written) stops; you post the I-PASS handoff.
+- **Chief** units: do them yourself, following treat steps 2 to 4.
+- **Agent** units: one **Resident** (`general-purpose`) per unit, told to follow `.claude/skills/treat/SKILL.md` for that unit under `/ward-round`.
+- Start **parallel** units together; they touch different files. Run dependent units in order, giving each the previous unit's report.
+- A Resident that returns a blocker: post its I-PASS handoff to the owner and stop.
 
-When all units are back, write one consolidated Treatment section, run the plan's checks across the whole change, and set `Status: treated`.
+Then consolidate: check the unit reports agree on shared names and interfaces and fix any mismatch (send it to a Resident unless trivial), update shared files, run all the plan's checks and HANDOFF section 8's once on the whole change, append one Treatment section, and set `Status: treated`.
 
 ## 4. Discharge review, sized to risk
 
-- **Any high-risk unit** (sourced fact, threshold, calculation, access or security logic): invoke `discharge-review`. If there are two or more high-risk units in different areas, also spawn one fresh **Review Attending** agent per high-risk unit in parallel, each reviewing only that unit's files against its sources, and pass their findings into `discharge-review`.
-- **Only low-risk units** (wording, layout, mechanical moves): invoke `discharge-review` once; no extra reviewers.
+- If the plan has **two or more high-risk units**, first spawn one fresh **Review Attending** (`general-purpose`) per high-risk unit **in parallel**. Each reads only its unit's diff and sources and returns findings marked blocking or minor; none writes the chart note. Append their findings to the chart note under `## Per-unit review`.
+- Invoke `discharge-review` (always, once per round).
 
-On **Readmit**, send the findings to a Resident (continue the one who did that unit, if possible), then review again only the units the findings touched. Repeat only for blocking findings. After **two** Readmit rounds, stop with an I-PASS handoff.
+On **Readmit**: send the blocking findings to a Resident (continue the one who did that unit if you can), append its fix rows to the Treatment section, set `Status: treated`, and invoke `discharge-review` again. After **two** Readmit rounds, stop with an I-PASS handoff.
 
 ## 5. Discharge
 
-Resolve any conflicts between unit reports yourself. Commit the code, then the chart note in its own commit. **Don't push or deploy.** Report to the owner in a few lines: what changed, key check results, "Found during treatment" items, and ask whether to push.
+Commit the code, then the chart note in its own commit. **Don't push or deploy.** Report to the owner in a few lines: what changed, key check results, "Found during treatment" items, and ask whether to push.
 
 ## Stop and ask the owner when
 

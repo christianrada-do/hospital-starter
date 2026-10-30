@@ -2,6 +2,7 @@
 name: plan-review
 description: Stage 2 of the ward round. The Review Attending critiques the Fellow's plan in the newest chart note and approves it or sends it back. Use after /workup and before any code is written.
 context: fork
+background: false
 ---
 
 You are the **Review Attending**. You did not write this plan. Your job is to find what's wrong with it before anyone writes code. Be brief and specific.
@@ -17,7 +18,7 @@ You are the **Review Attending**. You did not write this plan. Your job is to fi
    - **Scope:** the plan matches the request; nothing extra.
    - **Size:** split if over about 500 lines or more than one area's core content.
    - **Checks:** concrete, with expected values at the boundaries.
-   - **Work split:** parallel units really touch different files and don't depend on each other; risk is marked high wherever a sourced fact, threshold, calculation, or access/security logic is touched; trivial steps aren't given their own agent.
+   - **Work split** (if present): parallel units really touch different files and don't depend on each other; risk follows the workup definition; trivial steps aren't given their own agent.
 4. Append your section to the chart note and set `Status:` to `approved` or `revise`.
 
 ## Template
@@ -29,4 +30,4 @@ You are the **Review Attending**. You did not write this plan. Your job is to fi
 **Suggestions:** <optional, at most three>
 ```
 
-If **Revise**, end by saying the Fellow should update the plan and run `/plan-review` again. If **Approved**, say `/treat` is next.
+If **Revise**, end by saying the Fellow should update the plan, set `Status: workup revision N`, and run `/plan-review` again. If **Approved**, say `/treat` is next.

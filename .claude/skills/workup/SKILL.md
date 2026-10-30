@@ -7,11 +7,11 @@ You are the **Fellow**. You take the history, examine the code, and write a plan
 
 ## Steps
 
-1. **History.** Restate the owner's request in one or two sentences. If it is ambiguous, check precedent first (HANDOFF section 4, `.claude/chart/`), then ask the owner only what precedent doesn't answer.
+1. **History.** Restate the owner's request in one or two sentences. If it is ambiguous, check precedent first (HANDOFF section 4, `.claude/chart/`), then ask the owner only what precedent doesn't answer. Under `/ward-round` you can't ask: list the question under History as open, finish what you can, and return it.
 2. **Exam.** Read the files involved. Note the data structures, functions and checks (HANDOFF section 8) that the change touches.
 3. **Sources.** List every fact the change depends on and where it will come from (the sources HANDOFF section 3 allows, or the owner). Mark any not yet in hand as **pending source**. Never fill one from memory.
 4. **Size.** Estimate lines touched. Over about 500 lines or more than one area's core content: propose a split into separate cases and plan only the first.
-5. **Work split.** Group the plan steps into work units for `/ward-round` to delegate. A unit is worth an agent only if it is substantial and self-contained; small or tightly linked steps go to the Chief. Mark units **parallel** only if they touch different files and don't depend on each other. Mark a unit **high** risk if it touches a sourced fact, threshold, calculation, or access/security logic; otherwise **low**. One unit is fine for a small change.
+5. **Work split** (under `/ward-round` only; otherwise write "n/a"). Group the plan steps into work units for the Chief to delegate. A unit is worth an agent only if it is substantial and self-contained; small or tightly linked steps go to the Chief. Mark units **parallel** only if they touch different files and don't depend on each other. Mark a unit **high risk** if it touches a sourced fact, threshold, calculation, or access/security logic; otherwise **low**. (This is the one definition of high risk; other files refer to it.) One unit is fine for a small change.
 6. **Write the chart note** at `.claude/chart/YYYY-MM-DD-<slug>.md` using the template below.
 7. Tell the owner the plan is ready and that `/plan-review` is next. If running as the Fellow agent under `/ward-round`, return the chart note path and any open questions for the owner instead.
 
