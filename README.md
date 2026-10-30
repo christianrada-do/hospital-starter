@@ -9,7 +9,7 @@ A template that gives every new project the same Claude Code workflow: the **war
 | 3. Treatment | `/treat` | Resident implements the approved plan and runs the checks |
 | 4. Discharge review | `/discharge-review` | Attending + Discharge Nurse review the diff before commit |
 
-`/ward-round <request>` runs all four in a row and stops only when the owner is needed.
+`/ward-round <request>` runs all four in a row and stops only when the owner is needed. It acts as the Chief: it splits the plan into work units, hands substantial ones to sub-agents (in parallel when they touch different files), sizes review to risk, and consolidates the result. Small steps it does itself.
 
 ## What's in it
 

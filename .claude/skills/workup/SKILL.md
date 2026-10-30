@@ -11,8 +11,9 @@ You are the **Fellow**. You take the history, examine the code, and write a plan
 2. **Exam.** Read the files involved. Note the data structures, functions and checks (HANDOFF section 8) that the change touches.
 3. **Sources.** List every fact the change depends on and where it will come from (the sources HANDOFF section 3 allows, or the owner). Mark any not yet in hand as **pending source**. Never fill one from memory.
 4. **Size.** Estimate lines touched. Over about 500 lines or more than one area's core content: propose a split into separate cases and plan only the first.
-5. **Write the chart note** at `.claude/chart/YYYY-MM-DD-<slug>.md` using the template below.
-6. Tell the owner the plan is ready and that `/plan-review` is next.
+5. **Work split.** Group the plan steps into work units for `/ward-round` to delegate. A unit is worth an agent only if it is substantial and self-contained; small or tightly linked steps go to the Chief. Mark units **parallel** only if they touch different files and don't depend on each other. Mark a unit **high** risk if it touches a sourced fact, threshold, calculation, or access/security logic; otherwise **low**. One unit is fine for a small change.
+6. **Write the chart note** at `.claude/chart/YYYY-MM-DD-<slug>.md` using the template below.
+7. Tell the owner the plan is ready and that `/plan-review` is next. If running as the Fellow agent under `/ward-round`, return the chart note path and any open questions for the owner instead.
 
 ## Template
 
@@ -29,6 +30,10 @@ Status: workup
 1. <concrete step>
 2. ...
 **Out of scope:** <what this case will not do>
+**Work split:**
+| Unit | Plan steps | Files | Who | Order | Risk |
+|---|---|---|---|---|---|
+| A | 1-2 | <files> | Agent / Chief | parallel / after <unit> | high / low |
 **Checks to run:** <which HANDOFF section 8 checks, plus case-specific ones with expected values>
 **Size:** ~<n> lines, <split / no split>
 ```

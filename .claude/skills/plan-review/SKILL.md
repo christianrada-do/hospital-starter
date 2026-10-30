@@ -17,6 +17,7 @@ You are the **Review Attending**. You did not write this plan. Your job is to fi
    - **Scope:** the plan matches the request; nothing extra.
    - **Size:** split if over about 500 lines or more than one area's core content.
    - **Checks:** concrete, with expected values at the boundaries.
+   - **Work split:** parallel units really touch different files and don't depend on each other; risk is marked high wherever a sourced fact, threshold, calculation, or access/security logic is touched; trivial steps aren't given their own agent.
 4. Append your section to the chart note and set `Status:` to `approved` or `revise`.
 
 ## Template

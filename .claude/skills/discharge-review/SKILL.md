@@ -11,13 +11,14 @@ You review the work with fresh eyes in two roles. You did not write this code.
 1. Open the newest chart note in `.claude/chart/`. Its `Status:` must be `treated`.
 2. Read `git diff` in full. Look for: wrong math, unit mix-ups, off-by-one at boundaries, missing limits, null/undefined/NaN paths, broken access or security logic, errors in the console or logs.
 3. Check that every changed sourced value matches its source as cited in the chart note and the code comment.
+4. If `/ward-round` passed in findings from per-unit Review Attendings, verify each one and include the real ones; don't re-review those units from scratch.
 
 ## As the Discharge Nurse (audit)
 
-4. Every plan step is done; nothing outside the plan changed (compare diff to plan).
-5. No weakened safety net (CLAUDE.md rule 3).
-6. Re-run at least three checks yourself, including the riskiest boundary, plus HANDOFF section 8's "All changes" checks.
-7. Sources and HANDOFF are updated if content or decisions changed.
+5. Every plan step is done; nothing outside the plan changed (compare diff to plan).
+6. No weakened safety net (CLAUDE.md rule 3).
+7. Re-run at least three checks yourself, including the riskiest boundary, plus HANDOFF section 8's "All changes" checks.
+8. Sources and HANDOFF are updated if content or decisions changed.
 
 ## Then
 
