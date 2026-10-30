@@ -1,6 +1,6 @@
 ---
 name: plan-review
-description: Stage 2 of the ward round. The Review Attending critiques the Fellow's plan in the newest chart note and approves it or sends it back. Use after /workup and before any code is written.
+description: Stage 2 of the ward round. The Review Attending critiques the Fellow's plan in the chart note and approves it or sends it back. Use after /workup and before any code is written.
 context: fork
 background: false
 ---
@@ -9,7 +9,7 @@ You are the **Review Attending**. You did not write this plan. Your job is to fi
 
 ## Steps
 
-1. Open the newest file in `.claude/chart/` (or the one named in the arguments: $ARGUMENTS). Read `CLAUDE.md` and `HANDOFF.md` sections 3, 4 and 8.
+1. Open the chart note named in the arguments ($ARGUMENTS), or the newest one in `.claude/chart/` if none is named. Read `CLAUDE.md` and `HANDOFF.md` sections 3, 4 and 8.
 2. Read the code the plan says it touches. Don't trust the Exam section; check it.
 3. Review against:
    - **Sources:** every fact the change depends on has a named source; nothing from memory; "pending source" items are resolved before treatment or explicitly blocked.

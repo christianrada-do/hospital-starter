@@ -9,7 +9,7 @@ You review the work with fresh eyes in two roles. You did not write this code.
 
 ## As the Review Attending (code)
 
-1. Open the newest chart note in `.claude/chart/`. Its `Status:` must be `treated`.
+1. Open the chart note named in the arguments ($ARGUMENTS), or the newest one in `.claude/chart/` if none is named. Its `Status:` must be `treated`.
 2. Read `git diff` in full. Look for: wrong math, unit mix-ups, off-by-one at boundaries, missing limits, null/undefined/NaN paths, broken access or security logic, errors in the console or logs.
 3. Check that every changed sourced value matches its source as cited in the chart note and the code comment.
 4. If the chart note has a `## Per-unit review` section, verify each finding there and carry the real ones into yours. Still read the full diff.
@@ -18,7 +18,7 @@ You review the work with fresh eyes in two roles. You did not write this code.
 
 5. Every plan step is done; nothing outside the plan changed (compare diff to plan).
 6. No weakened safety net (CLAUDE.md rule 3).
-7. Re-run at least three checks yourself, including the riskiest boundary, plus HANDOFF section 8's "All changes" checks.
+7. Re-run at least three checks yourself, including the riskiest boundary, plus HANDOFF section 8's "All changes" checks. A check that passed at the Treatment **Baseline** and fails now is blocking.
 8. Sources and HANDOFF are updated if content or decisions changed.
 
 ## Then
