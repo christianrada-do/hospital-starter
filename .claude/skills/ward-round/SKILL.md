@@ -15,18 +15,22 @@ If the request is a minor procedure (CLAUDE.md), say so and do it yourself. Othe
 
 - If the exam will span several folders or more than about five files, first send one read-only `Explore` agent per folder **in parallel**, each returning at most 15 lines: files, functions and checks touched.
 - Spawn the **Fellow** (`general-purpose`) to follow `.claude/skills/workup/SKILL.md` under `/ward-round`, with any Explore summaries. If it returns open questions, check precedent, ask the owner, and continue the Fellow with the answers.
-- The Fellow returns the chart note path. Pass that path to every later skill and agent, so none falls back to "the newest chart note".
+- The Fellow sets the case's **Tier** (CLAUDE.md, "Tiers") and returns the chart note path. Pass that path to every later skill and agent, so none falls back to "the newest chart note".
 
-## 2. Plan review
+## 2. Plan review (high-risk tier only)
 
-Invoke `plan-review` with the chart note path. On **Revise**, continue the Fellow with the required changes (it sets `Status: workup revision N`), then review again. After **two** Revise rounds, stop with an I-PASS handoff (CLAUDE.md rule 6).
+Standard tier: skip; the workup already set `Status: approved`. Otherwise invoke `plan-review` with the chart note path:
+
+- **Approved:** go on.
+- **Approved with changes:** continue the Fellow to apply each listed change and note it under "Changes applied (Fellow)"; then set `Status: approved` and go on. No second review.
+- **Revise:** continue the Fellow with the required changes (it sets `Status: workup revision N`), then review again. After **two** Revise rounds, stop with an I-PASS handoff (CLAUDE.md rule 6).
 
 ## 3. Treatment (Residents)
 
 First run the plan's checks and HANDOFF section 8's on the unchanged code and keep the results, plus `git status --short`, as the **Baseline**. Then work the units in the plan's Work split:
 
 - **Chief** units: do them yourself, following treat steps 2 to 4 (Baseline already done).
-- **Agent** units: one **Resident** (`general-purpose`) per unit, told to follow `.claude/skills/treat/SKILL.md` for that unit under `/ward-round`.
+- **Agent** units: one **Resident** (`general-purpose`) per unit, told to follow `.claude/skills/treat/SKILL.md` for that unit under `/ward-round`. A high-risk unit's Resident runs on your own model.
 - Start **parallel** units together; they touch different files. Run dependent units in order, giving each the previous unit's report.
 - A Resident that returns a blocker: post its I-PASS handoff to the owner and stop.
 
@@ -39,10 +43,12 @@ Then consolidate:
 
 ## 4. Discharge review, sized to risk
 
-- If the plan has **two or more high-risk units**, first spawn one fresh **Review Attending** (`general-purpose`) per high-risk unit **in parallel**. Each reads only its unit's diff and sources and returns findings marked blocking or minor; none writes the chart note. Append their findings to the chart note under `## Per-unit review`.
-- Invoke `discharge-review` with the chart note path (always, once per round).
+- If the plan has **two or more high-risk units**, first spawn one fresh **Review Attending** (`general-purpose`, on your own model) per high-risk unit **in parallel**. Each reads only its unit's diff and sources and returns findings marked blocking or minor; none writes the chart note. Append their findings to the chart note under `## Per-unit review`.
+- Invoke `discharge-review` (high-risk tier) or `discharge-check` (standard tier) with the chart note path, once per round.
 
-On **Readmit**: send the blocking findings to a Resident (continue the one who did that unit if you can), append its fix rows to the Treatment section, set `Status: treated`, and invoke `discharge-review` again. After **two** Readmit rounds, stop with an I-PASS handoff.
+On **Discharge with fixes**: apply each fix exactly (yourself, or the unit's Resident), re-run the affected checks, note them under "Fixes applied (post-review)", and go to Discharge. No second review.
+
+On **Readmit**: send the blocking findings to a Resident (continue the one who did that unit if you can), append its fix rows to the Treatment section, set `Status: treated`, and review again. After **two** Readmit rounds, stop with an I-PASS handoff.
 
 ## 5. Discharge
 

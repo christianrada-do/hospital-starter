@@ -17,6 +17,7 @@ import sys
 STAGES = {  # Status: value -> (stage label, what comes next)
     "workup": ("1/4 Workup", "plan-review next"),
     "revise": ("2/4 Plan review: revise", "update plan"),
+    "approved-with-changes": ("2/4 Plan review", "apply changes, then treat"),
     "approved": ("3/4 Treat", "plan approved"),
     "treated": ("4/4 Discharge review", "treated"),
     "readmit": ("4/4 Readmit", "fix findings"),

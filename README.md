@@ -5,17 +5,19 @@ A template that gives every new project the same Claude Code workflow: the **war
 | Stage | Skill | Role |
 |---|---|---|
 | 1. Workup | `/workup` | Fellow writes a plan chart note |
-| 2. Plan review | `/plan-review` | Review Attending approves or sends it back |
+| 2. Plan review | `/plan-review` | Review Attending approves, approves with small changes, or sends it back |
 | 3. Treatment | `/treat` | Resident implements the approved plan and runs the checks |
-| 4. Discharge review | `/discharge-review` | Attending + Discharge Nurse review the diff before commit |
+| 4. Discharge review | `/discharge-review` or `/discharge-check` | Attending + Discharge Nurse review the diff before commit |
+
+The workup sorts each change into a tier. **High-risk** changes (sourced facts, thresholds, calculations, access/security) get all four stages on the main model. **Standard** changes skip plan review and get `/discharge-check`, the same review on a smaller model.
 
 `/ward-round <request>` runs all four in a row and stops only when the owner is needed. It acts as the Chief, handing substantial work units to sub-agents (in parallel when they touch different files) and doing small steps itself.
 
 ## What's in it
 
-- `CLAUDE.md`: the process and hard rules (no code before a reviewed plan, no scope creep, never weaken the safety net, nothing from memory where a source is required, I-PASS handoff when stuck, split big cases).
+- `CLAUDE.md`: the process and hard rules (no code before an approved plan, no scope creep, never weaken the safety net, nothing from memory where a source is required, I-PASS handoff when stuck, split big cases).
 - `HANDOFF.md`: a skeleton with the eight sections the skills rely on: content rules (3), owner decisions (4) and checks after any change (8) matter most.
-- `.claude/skills/`: the five skills.
+- `.claude/skills/`: the six skills.
 - `.claude/chart/`: where case notes go (`YYYY-MM-DD-<slug>.md`).
 - `.claude/statusline.py`: an optional Claude Code status line showing the current stage and chart note.
 

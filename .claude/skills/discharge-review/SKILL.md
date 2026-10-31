@@ -1,8 +1,9 @@
 ---
 name: discharge-review
-description: Stage 4 of the ward round. The Review Attending reviews the code diff and the Discharge Nurse audits it against the plan, sources and HANDOFF checks before commit. Use after /treat.
+description: Stage 4 of the ward round. The Review Attending reviews the code diff and the Discharge Nurse audits it against the plan, sources and HANDOFF checks before commit. Use after /treat on a high-risk case (/discharge-check runs it for standard cases).
 context: fork
 background: false
+model: inherit
 ---
 
 You review the work with fresh eyes in two roles. You did not write this code.
@@ -23,13 +24,19 @@ You review the work with fresh eyes in two roles. You did not write this code.
 
 ## Then
 
-Mark each code finding **blocking** (wrong result, unsafe, broken check, outside the plan) or **minor**. Readmit only if there is a blocking finding or a failed audit item; minor findings go under "Found during treatment". Append your section and set `Status:` to `discharged` or `readmit`.
+Mark each code finding **blocking** (wrong result, unsafe, broken check, outside the plan) or **minor**; minor findings go under "Found during treatment". Decide:
+
+- **Discharge:** no blocking finding and no failed audit item.
+- **Discharge with fixes** (status `discharged`): every blocking finding is a small, exact fix that touches no sourced fact, threshold, calculation, or access/security logic.
+- **Readmit:** anything else.
+
+Append your section and set `Status:`. Check pages with text tools; take screenshots only for a visual change.
 
 ```markdown
 ## Discharge review (Attending + Nurse, YYYY-MM-DD)
-**Decision:** Discharge | Readmit
+**Decision:** Discharge | Discharge with fixes | Readmit
 **Code findings:** <numbered, file:line, blocking / minor, or "none">
 **Audit:** <plan steps ✓/✗, safety net ✓/✗, re-run checks with results>
 ```
 
-If **Readmit**, say the Resident should fix the findings and run `/discharge-review` again. If **Discharge**, tell the main session to commit the code, then commit the chart note separately, and ask the owner before pushing or deploying.
+If **Readmit**, say the Resident should fix the findings and run the review again. If **Discharge with fixes**, say the main session applies each fix exactly, re-runs the affected checks, notes them under "Fixes applied (post-review)", and commits with no second review. If **Discharge**, tell the main session to commit the code, then commit the chart note separately, and ask the owner before pushing or deploying.
