@@ -17,7 +17,7 @@ The workup sorts each change into a tier. **High-risk** changes (sourced facts, 
 
 - `CLAUDE.md`: the process and hard rules (no code before an approved plan, no scope creep, never weaken the safety net, nothing from memory where a source is required, I-PASS handoff when stuck, split big cases).
 - `HANDOFF.md`: a skeleton with the eight sections the skills rely on: content rules (3), owner decisions (4) and checks after any change (8) matter most.
-- `.claude/skills/`: the six skills.
+- `.claude/skills/`: the six ward-round skills, plus `claudy-comment-detector`, which discharge review runs on new comments and docs.
 - `.claude/chart/`: where case notes go (`YYYY-MM-DD-<slug>.md`).
 - `.claude/statusline.py`: an optional Claude Code status line showing the current stage and chart note.
 
